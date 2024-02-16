@@ -15,7 +15,7 @@ const Navbar = () => {
       <Layout>
         <Layout.Header className="nav-header">
           <div className="logo">
-          <h1 className="brand-font" style={{ fontSize: '24px' }}>
+            <h1 className="brand-font" style={{ fontSize: '24px', fontWeight: '700' }}>
             <img
               style={{ width: '20%' }}
               src="https://cdn2.iconfinder.com/data/icons/audiovisual-production-filled-pixel-perfect/64/visual-production_clapper-512.png"
