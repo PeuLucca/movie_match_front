@@ -1,22 +1,13 @@
-// Core
-import React from "react";
-
-// Screens
-import Home from "./screens/Home";
-import NewMovie from "./screens/NewMovie";
-import SignIn from "./screens/SignIn";
-import SignUp from "./screens/SignUp";
-
-// Components
-import Navbar from "./components/Navbar"
-import Footer from "./components/Footer"
+import "./App.css";
+import { BrowserRouter } from "react-router-dom";
+import Router from "./pages/router";
 
 const App = () => {
   return (
-    <>
-      <SignUp />
-    </>
+    <BrowserRouter>
+      <Router />
+    </BrowserRouter>
   );
-}
+};
 
 export default App;

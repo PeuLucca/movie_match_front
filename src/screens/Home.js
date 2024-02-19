@@ -13,7 +13,7 @@ const Home = () => {
 
     return (
         <div style={{ padding: '15px' }}>
-            <div className='movies'>
+            <div id="trending" className='movies'>
                 <h1 style={{ color: '#864726', fontWeight: '800' }}> Trending Today 🔥</h1>
                 <div className='movie-card'>
                     <img
@@ -45,7 +45,7 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-            <div className='aboutUs'>
+            <div id="aboutUs" className='aboutUs'>
                 <div className='aboutUs-text'>
                     <h2>Power of AI in Cinema 🎥</h2>
                     <p>
@@ -61,7 +61,7 @@ const Home = () => {
                     />
                 </div>
             </div>
-            <div className='movies'>
+            <div id="forYou" className='movies'>
                 <h2 style={{ color: '#864726', fontWeight: '800', fontSize: '28px' }}>For you 🎯</h2>
                 <div className='movie-card'>
                     <img
