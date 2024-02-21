@@ -259,8 +259,8 @@
 
 .submit-button {
   background-color: #fff;
-  color: #007bff;
-  border: 1px solid #007bff !important;
+  color: #333;
+  border: 1px solid #333 !important;
   padding: 10px;
   border: none;
   border-radius: 5px;
@@ -271,7 +271,7 @@
 }
 
 .submit-button:hover {
-  background-color: #0056b3;
+  background-color: #333;
   color: #fff;
 }
 

@@ -1,10 +1,38 @@
 // Core
-import React from 'react';
+import React, { useState } from 'react';
 
 // Style
 import '../App.css';
 
+// Api
+import { createUser } from '../api';
+
 const SignUp = () => {
+  const [nome, setNome] = useState("");
+  const [senha, setSenha] = useState("");
+  const [confirmarSenha, setConfirmarSenha] = useState("");
+
+  const validateForm = () => {
+    if(!nome || !senha){
+      alert("Por favor, preencha todos os campos");
+    }else if(senha !== confirmarSenha){
+      alert("Senhas diferentes! Por favor preencha-as corretamente");
+    }else{
+      validate();
+    }
+  };
+
+  // API
+  const validate = async () => {
+    try{
+      const response = await createUser({ nome, senha });
+      localStorage.setItem("token", response[0].result.nome);
+      window.location.reload();
+    }catch(e){
+      console.log(e);
+    }
+  };
+
   return (
     <div className="signin-container">
       <div className="logo-container">
@@ -19,6 +47,8 @@ const SignUp = () => {
             name="name"
             required
             className="form-input-sign-in"
+            value={nome}
+            onChange={(e) => setNome(e.target.value)}
           />
           <input
             placeholder='Your password'
@@ -26,6 +56,8 @@ const SignUp = () => {
             name="password"
             required
             className="form-input-sign-in"
+            value={senha}
+            onChange={(e) => setSenha(e.target.value)}
           />
           <input
             placeholder='Type your password again'
@@ -33,9 +65,11 @@ const SignUp = () => {
             name="password"
             required
             className="form-input-sign-in"
+            value={confirmarSenha}
+            onChange={(e) => setConfirmarSenha(e.target.value)}
           />
 
-        <button className="submit-button" style={{ width: '100%' }}>
+        <button className="submit-button" style={{ width: '100%' }} onClick={validateForm}>
           Sign up
         </button>
         </div>
