@@ -1,12 +1,17 @@
+// Core
 import React, { useState } from 'react';
+
+// Api
+import { createMovie } from "../api/movie/index"
 
 const NewMovie = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    genre: '',
-    director: '',
-    imageUrl: '',
+    nome: '',
+    genero: '',
+    diretor: '',
+    img: '',
   });
+  const [sucess, setSuccess] = useState({ movie: null, status: false });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -16,16 +21,35 @@ const NewMovie = () => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Add your logic to save the movie data to the database or perform other actions
-    console.log('Form submitted:', formData);
-    // Reset the form after submission
+  const validate = () => {
+    if(
+      !formData.nome || !formData.genero ||
+      !formData.diretor || !formData.img
+    ){
+      alert("Please fill all the movie fields!")
+    }else{
+      handleSubmit();
+    }
+  };
+
+  const handleSubmit = async () => {
+    try{
+      const response = await createMovie(formData);
+      if(response[0].result){
+        setSuccess({ movie: formData.nome, status: true })
+        clearFields();
+      }
+    }catch(e){
+      console.log(e);
+    }
+  };
+
+  const clearFields = () => {
     setFormData({
-      name: '',
-      genre: '',
-      director: '',
-      imageUrl: '',
+      nome: '',
+      genero: '',
+      diretor: '',
+      img: '',
     });
   };
 
@@ -34,14 +58,14 @@ const NewMovie = () => {
       <h2 style={{ textAlign: 'center', marginBottom: '30px', color: '#333', fontWeight: '700' }}>
         Add Movie
       </h2>
-      <form onSubmit={handleSubmit} className="add-movie-form">
+      <form className="add-movie-form">
         <label className="form-label">
           Name
           <input
             placeholder='The Irishman'
             type="text"
-            name="name"
-            value={formData.name}
+            name="nome"
+            value={formData.nome}
             onChange={handleChange}
             required
             className="form-input"
@@ -52,8 +76,8 @@ const NewMovie = () => {
           <input
             placeholder='Drama'
             type="text"
-            name="genre"
-            value={formData.genre}
+            name="genero"
+            value={formData.genero}
             onChange={handleChange}
             required
             className="form-input"
@@ -64,8 +88,8 @@ const NewMovie = () => {
           <input
             placeholder='Martin Scorsese'
             type="text"
-            name="director"
-            value={formData.director}
+            name="diretor"
+            value={formData.diretor}
             onChange={handleChange}
             required
             className="form-input"
@@ -76,17 +100,22 @@ const NewMovie = () => {
           <input
             placeholder='your-movie-image.com/irishman-image'
             type="url"
-            name="imageUrl"
-            value={formData.imageUrl}
+            name="img"
+            value={formData.img}
             onChange={handleChange}
             required
             className="form-input"
           />
         </label>
-        <button type="submit" className="submit-button">
+        <button className="submit-button" onClick={validate}>
           Save
         </button>
       </form>
+      {
+        sucess.status
+        ? <h4 style={{ textAlign: 'center', marginTop: '5px', color: 'green' }}>{sucess.movie} successfully created</h4>
+        : null
+      }
     </div>
   );
 };

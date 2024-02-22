@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import '../App.css';
 
 // Api
-import { validateUser } from '../api';
+import { validateUser } from '../api/user/index';
 
 const SignIn = () => {
   const [nome, setNome] = useState("");
@@ -14,7 +14,7 @@ const SignIn = () => {
 
   const validateForm = () => {
     if(!nome || !senha){
-      alert("Por favor, preencha todos os campos");
+      alert("Please, fill all the fields");
     }else{
       validate();
     }
@@ -30,7 +30,7 @@ const SignIn = () => {
         localStorage.setItem("token", user);
         window.location.reload();
       }else{
-        alert("Usuário não encontrado!")
+        alert("User not founded!")
         setNome("");
         setSenha("");
       }

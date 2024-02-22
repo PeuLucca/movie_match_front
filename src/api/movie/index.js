@@ -1,14 +1,13 @@
-const BASE_URL = "http://localhost:3001/";
+const BASE_URL = "http://localhost:3001/movie/";
 
-// User
-export const validateUser = async (login) => {
+export const createMovie = async (movie) => {
     try{
-        const response = await fetch(`${BASE_URL}users/validateUser`, {
+        const response = await fetch(`${BASE_URL}create`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify(login),
+            body: JSON.stringify(movie),
           });
         
           return await response.json();
@@ -17,14 +16,13 @@ export const validateUser = async (login) => {
     }
 };
 
-export const createUser = async (login) => {
+export const getAllMovies = async () => {
   try{
-      const response = await fetch(`${BASE_URL}users/createUser`, {
-          method: 'POST',
+      const response = await fetch(`${BASE_URL}all`, {
+          method: 'GET',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(login),
         });
       
         return await response.json();

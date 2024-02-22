@@ -9,8 +9,6 @@ const LeftMenu = ({ mode }) => {
   const location = useLocation();
 
   React.useEffect(() => {
-    console.log(location.pathname);
-    // Inside your component or a separate script
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();

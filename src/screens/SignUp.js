@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import '../App.css';
 
 // Api
-import { createUser } from '../api';
+import { createUser } from '../api/user/index';
 
 const SignUp = () => {
   const [nome, setNome] = useState("");
@@ -14,9 +14,9 @@ const SignUp = () => {
 
   const validateForm = () => {
     if(!nome || !senha){
-      alert("Por favor, preencha todos os campos");
+      alert("Please, fill all the fields");
     }else if(senha !== confirmarSenha){
-      alert("Senhas diferentes! Por favor preencha-as corretamente");
+      alert("Different passwords! Please fill it correctly");
     }else{
       validate();
     }
