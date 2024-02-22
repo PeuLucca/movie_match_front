@@ -9,7 +9,7 @@ import { Rating } from '@mui/material';
 import '../App.css';
 
 const Home = () => {
-    const [rate, setRating] = useState(4)
+    const [rate, setRating] = useState(4);
 
     return (
         <div style={{ padding: '15px' }}>
