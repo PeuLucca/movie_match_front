@@ -5,6 +5,7 @@ import NavBar from "../components/Navbar"
 import Footer from "../components/Footer"
 
 // Screens
+import Rating from "../screens/Rating"
 import Home from "../screens/Home"
 import NewMovie from "../screens/NewMovie"
 import SignIn from "../screens/SignIn"
@@ -21,7 +22,7 @@ const pagesData = [
         Component={() => (
           <SignUp />
         )}
-        redirectPath="/home"
+        redirectPath="/rating"
       />
     ),
     title: "signup"
@@ -38,6 +39,21 @@ const pagesData = [
       />
     ),
     title: "signin"
+  },
+  {
+    path: "rating",
+    element: (
+      <WithAuthentication
+        isLoggedIn={isLoggedIn}
+        Component={() => (
+          <>
+            <Rating />
+          </>
+        )}
+        redirectPath="/home"
+      />
+    ),
+    title: "Rating"
   },
   {
     path: "home",

@@ -1,40 +1,125 @@
 // Core
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // Components
 import Voting from '../components/Voting';
 
+// MUI
+import { Rating as RatingMUI } from '@mui/material';
+
+// API
+import { getRatingMovies, voteMovie } from "../api/movie/index";
+import { getUserId } from "../api/user";
+
 const Rating = () => {
   const [buttonText, setButtonText] = useState('Next');
   const [etapa, setEtapa] = useState(1);
-  const [filmes] = useState([
-    { id: 1, titulo: 'The Irishman', genero: 'Drama', diretor: 'Martin Scorsese' },
-    { id: 2, titulo: 'Filme 2', genero: 'Genero do Filme 2', diretor: 'Diretor 2' },
-    { id: 3, titulo: 'Filme 3', genero: 'Genero do Filme 3', diretor: 'Diretor 3' },
-    { id: 4, titulo: 'Filme 4', genero: 'Genero do Filme 4', diretor: 'Diretor 4' },
-  ]);
-  const [filmeAtual, setFilmeAtual] = useState(filmes[0]);
+  const [filmes, setFilmes] = useState([]);
+  const [filmeAtual, setFilmeAtual] = useState(null);
+  const [rating, setRating] = useState(null);
+  const [userId, setUserId] = useState(null);
+
+  const getRatingMeaning = (numericRating) => {
+    if (numericRating >= 0.0 && numericRating < 0.5) {
+        return "Terrible";
+    } else if (numericRating >= 0.5 && numericRating < 1.0) {
+        return "Very Bad";
+    } else if (numericRating >= 1.0 && numericRating < 1.5) {
+        return "Bad";
+    } else if (numericRating >= 1.5 && numericRating < 2.0) {
+        return "Very Bad";
+    } else if (numericRating >= 2.0 && numericRating < 2.5) {
+        return "Bad";
+    } else if (numericRating >= 2.5 && numericRating < 3.0) {
+        return "Average";
+    } else if (numericRating >= 3.0 && numericRating < 3.5) {
+        return "Average";
+    } else if (numericRating >= 3.5 && numericRating < 4.0) {
+        return "Good";
+    } else if (numericRating >= 4.0 && numericRating < 4.5) {
+        return "Good";
+    } else if (numericRating >= 4.5 && numericRating <= 5.0) {
+        return "Excellent";
+    }
+};
 
   const handleVotar = (filmeId) => {
-    // Lógica para processar o voto, armazenar dados, etc.
-    console.log(`Votou no filme ${filmeId}`);
+    console.log(`Usuario: ${userId[0]}`);
+    console.log(`Filme: ${filmeId}`);
+    console.log(`Rating: ${rating}`);
 
-    // Avança para o próximo filme ou finaliza o processo
-    if (etapa < 10 && etapa < filmes.length) {
-        setEtapa(etapa + 1);
+    if (etapa <= 14 && etapa < filmes.length) {
+      setEtapa((prevEtapa) => prevEtapa + 1);
+      setTimeout(() => {
         setFilmeAtual(filmes[etapa]);
-      } else{
-        console.log('Processo de votação concluído');
-        console.log('Redirecionando para Home');
-        setButtonText('Go Home');
+      }, 0);
+    } else {
+      console.log('Processo de votação concluído');
+      console.log('Redirecionando para Home');
+      setButtonText('Go Home');
+    }
+  };
+
+  // API functions
+  const fetchUserId = async () => {
+    try{
+      const token = localStorage.getItem("token");
+      const response = await getUserId({ nome: token });
+      setUserId(response);
+    }catch(e){
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    const fetchRatingMovies = async () => {
+      try {
+        const response = await getRatingMovies();
+        setFilmes(response);
+      } catch (e) {
+        console.log(e);
       }
     };
 
-    return(
-        <div>
-            {etapa <= 10 && <Voting filmeAtual={filmeAtual} onVotar={handleVotar} buttonText={buttonText} />}
-        </div>
-    );
+    setTimeout(() => {
+      fetchUserId();
+    }, 100)
+
+    fetchRatingMovies();
+  }, []);
+
+  useEffect(() => {
+    if (filmes.length > 0) {
+      setFilmeAtual(filmes[0]);
+    }
+  }, [, filmes, etapa]);
+
+  return (
+    <div>
+      {filmeAtual && etapa <= 14 && (
+        <Voting
+          filmeAtual={filmeAtual}
+          onVotar={handleVotar}
+          buttonText={buttonText}
+        >
+          <RatingMUI
+            style={{ fontSize: '30px' }}
+            name="simple-controlled"
+            precision={0.5}
+            value={rating}
+            onChange={(event, newValue) => {
+              setRating(newValue);
+            }}
+          />
+          <p style={{ color: '#3c3c3c' }}>
+            {
+              !rating ? null : <b>{rating} {getRatingMeaning(rating)}</b>
+            }
+          </p>
+        </Voting>
+      )}
+    </div>
+  );
 };
 
 export default Rating;

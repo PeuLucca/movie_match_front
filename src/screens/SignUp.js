@@ -60,7 +60,7 @@ const SignUp = () => {
             onChange={(e) => setSenha(e.target.value)}
           />
           <input
-            placeholder='Type your password again'
+            placeholder='Your password again'
             type="password"
             name="password"
             required

@@ -30,3 +30,34 @@ export const getAllMovies = async () => {
       console.error(e);
   }
 };
+
+export const getRatingMovies = async () => {
+  try{
+      const response = await fetch(`${BASE_URL}firstVoting`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+      
+        return await response.json();
+  }catch(e){
+      console.error(e);
+  }
+};
+// 
+export const voteMovie = async (movie) => {
+  try{
+    const response = await fetch(`${BASE_URL}movieVote`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(movie),
+      });
+    
+      return await response.json();
+  }catch(e){
+      console.error(e);
+  }
+};

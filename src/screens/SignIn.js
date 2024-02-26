@@ -77,7 +77,7 @@ const SignIn = () => {
               marginTop: '3%'
             }}
           >
-            <Link to="/signup">Ainda não tem cadastro?</Link>
+            <Link to="/signup">Not registered yet?</Link>
           </a>
         </div>
       </div>

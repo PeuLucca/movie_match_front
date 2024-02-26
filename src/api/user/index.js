@@ -31,3 +31,19 @@ export const createUser = async (login) => {
       console.error(e);
   }
 };
+
+export const getUserId = async (nome) => {
+  try{
+    const response = await fetch(`${BASE_URL}returnUser`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(nome),
+      });
+    
+      return await response.json();
+  }catch(e){
+      console.error(e);
+  }
+};
